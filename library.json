@@ -1,0 +1,23 @@
+{
+    "name": "SIMPLE_ESP32LED",
+    "keywords": "LED, ESP32",
+    "description": "Library for controlling LED's on ESP32",
+    "authors":
+    [
+      {
+        "name": "Greg Runnels",
+        "email": "grunnels@gmail.com",
+        "maintainer": true
+      }
+    ],
+    "repository":
+    {
+      "type": "git",
+      "url": "https://github.com/grunnels/ESP32LED.git"
+    },
+    "version": "0.3.0",
+    "license": "",
+    "frameworks": "*",
+    "platforms": "*",
+    "headers": "SIMPLE_ESP32LED.h"
+  }
