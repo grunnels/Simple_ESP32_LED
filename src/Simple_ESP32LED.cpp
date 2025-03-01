@@ -37,10 +37,10 @@ void SimpleESP32_LED::turnLEDOn(int ledStatus)
     switch (ledStatus)
     {
     case LED_ON:
-        blinkVal = 255;
+        blinkVal = 0;
         break;
     case LED_OFF:
-        blinkVal = 0;
+        blinkVal = 255;
         break;
     case LED_BLINK:
         blinkVal = BLINK_VALUE;

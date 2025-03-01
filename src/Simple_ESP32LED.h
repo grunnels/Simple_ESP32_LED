@@ -19,8 +19,8 @@
 
 typedef enum ESP32LED_MODE
 {
-    LED_OFF = 1,
-    LED_ON = 0,
+    LED_OFF = 0,
+    LED_ON = 1,
     LED_BLINK = 2
 } esp32ledMode;
 
