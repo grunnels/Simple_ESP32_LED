@@ -31,20 +31,17 @@ typedef enum ESP32LED_BLINK
     LED_FAST = 16
 } esp32ledBlink;
 
-const int RESOLUTION = 8;
-
 class SimpleESP32_LED
 {
 public:
-    void init(uint8_t ledPin);
-    void init(uint8_t ledPin, uint16_t blinkRate);
+    void init(uint8_t lp, uint16_t blinkRate = LED_MEDIUM);
     void turnLEDOn(int ledStatus);
-    void turnLEDOn(int ledStatus, long duration);
     void turnLEDOn();
     void turnLEDOff();
     void blink();
 
 private:
+    uint8_t ledPin;
     uint16_t frequency;
     uint16_t channel;
 };
