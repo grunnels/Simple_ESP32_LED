@@ -2,7 +2,7 @@
 
 # Simple_ESP32_LED
 
-Library for LED controll on ESP32.
+Library for LED control on ESP32.
 
 
 ## Description

@@ -16,7 +16,7 @@
 #define LED_BUILD_TYPE_5 5 // idf_ver post 5.x
 
 #ifndef LED_BUILD_TYPE
-#error "Must define LED_BUILD_TYPE..."
+#error Must define LED_BUILD_TYPE...  Check IDF_VER
 #endif
 
 #include "Simple_ESP32LED.h"

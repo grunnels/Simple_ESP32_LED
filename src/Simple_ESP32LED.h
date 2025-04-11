@@ -17,12 +17,21 @@
 
 #include <Arduino.h>
 
+#ifdef LED_ON_WHEN_HIGH
 typedef enum ESP32LED_MODE
 {
     LED_OFF = 0,
     LED_ON = 1,
     LED_BLINK = 2
 } esp32ledMode;
+#else
+typedef enum ESP32LED_MODE
+{
+    LED_OFF = 1,
+    LED_ON = 0,
+    LED_BLINK = 2
+} esp32ledMode;
+#endif
 
 typedef enum ESP32LED_BLINK
 {
