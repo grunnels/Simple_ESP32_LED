@@ -25,22 +25,22 @@
 const int BLINK_VALUE = 100;
 const int RESOLUTION = 8;
 #ifdef LED_ON_WHEN_HIGH
-const int LED_ON_VALUE = 0;
-const int LED_OFF_VALUE = 255;
-#else
 const int LED_ON_VALUE = 255;
 const int LED_OFF_VALUE = 0;
+#else
+const int LED_ON_VALUE = 0;
+const int LED_OFF_VALUE = 255;
 #endif
 #endif
 #if LED_BUILD_TYPE == LED_BUILD_TYPE_5
 const int BLINK_VALUE = 8000;
 const int RESOLUTION = 14;
 #ifdef LED_ON_WHEN_HIGH
-const int LED_ON_VALUE = 0;
-const int LED_OFF_VALUE = 16383;
-#else
-const int LED_ON_VALUE = 16383;
+const int LED_ON_VALUE = 0xFFFF;
 const int LED_OFF_VALUE = 0;
+#else
+const int LED_ON_VALUE = 0;
+const int LED_OFF_VALUE = 0xFFFF;
 #endif
 #endif
 
