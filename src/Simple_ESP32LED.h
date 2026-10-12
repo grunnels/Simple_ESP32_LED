@@ -40,12 +40,23 @@
      void turnLEDOn();
      void turnLEDOff();
      void blink(int duration = 0);
+     // 2026-10-11: a slow, visible blink timed in software - onMs lit, offMs dark,
+     // repeating until turnLEDOn/turnLEDOff/blink is called. blink() above is the
+     // fast PWM blink (several times a second); this one can be as slow as you like,
+     // e.g. blinkRate(100, 2900) = a short flash every 3 s.
+     void blinkRate(uint16_t onMs, uint16_t offMs);
  
  private:
      uint8_t ledPin;
      uint16_t frequency;
      uint16_t channel;
      TimerHandle_t blickOffTimer = NULL;
+     TimerHandle_t rateTimer = NULL;
+     volatile bool rateLit = false;
+     volatile uint16_t rateOnMs = 0, rateOffMs = 0;
+     void write(int ledStatus);   // set the LED without stopping blinkRate
+     void stopRate();
+     static void rateCallback(TimerHandle_t t);
  
  };
  

@@ -65,6 +65,12 @@
  
  void SimpleESP32_LED::turnLEDOn(int ledStatus)
  {
+     stopRate();
+     write(ledStatus);
+ }
+
+ void SimpleESP32_LED::write(int ledStatus)
+ {
      int blinkVal = 0;
      switch (ledStatus)
      {
@@ -106,7 +112,7 @@
  
  void SimpleESP32_LED::blink(int duration)
  {
-     turnLEDOn(LED_BLINK);
+     turnLEDOn(LED_BLINK);   // (stops blinkRate)
  
      if (duration != 0)
      {
@@ -120,4 +126,51 @@
          xTimerStart(blickOffTimer, portMAX_DELAY);
      }
  }
- 
+
+ // ---- blinkRate: a software-timed blink (2026-10-11) ---------------------------
+ void SimpleESP32_LED::stopRate()
+ {
+     if (rateTimer != NULL)
+         xTimerStop(rateTimer, 0);
+     rateOnMs = rateOffMs = 0;
+ }
+
+ void SimpleESP32_LED::rateCallback(TimerHandle_t t)
+ {
+     SimpleESP32_LED *led = static_cast<SimpleESP32_LED *>(pvTimerGetTimerID(t));
+     if (led == nullptr || led->rateOnMs == 0)
+         return;   // stopped meanwhile
+     led->rateLit = !led->rateLit;
+     led->write(led->rateLit ? LED_ON : LED_OFF);
+     uint16_t next = led->rateLit ? led->rateOnMs : led->rateOffMs;
+     xTimerChangePeriod(t, pdMS_TO_TICKS(next > 0 ? next : 1), 0);   // also restarts it
+ }
+
+ void SimpleESP32_LED::blinkRate(uint16_t onMs, uint16_t offMs)
+ {
+     if (onMs == 0)
+     {
+         turnLEDOff();
+         return;
+     }
+     if (offMs == 0)
+     {
+         turnLEDOn();
+         return;
+     }
+     if (rateTimer == NULL)
+     {
+         rateTimer = xTimerCreate("ledRate", pdMS_TO_TICKS(onMs), pdFALSE, static_cast<void *>(this), rateCallback);
+         if (rateTimer == NULL)
+         {
+             blink();   // no timer to be had - the plain blink will do
+             return;
+         }
+     }
+     xTimerStop(rateTimer, 0);
+     rateOnMs = onMs;
+     rateOffMs = offMs;
+     rateLit = true;
+     write(LED_ON);
+     xTimerChangePeriod(rateTimer, pdMS_TO_TICKS(onMs), 0);   // starts it
+ }
